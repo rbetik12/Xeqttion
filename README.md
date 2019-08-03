@@ -1,4 +1,3 @@
 # Xeqttion
-Java based game made on libgdx framework 
 
-.
+Java based game made on libgdx framework 
