@@ -28,11 +28,11 @@ public class GameClass extends Game {
         return pointsAmount;
     }
 
-    public void incPointsAmount () {
+    public void incPointsAmount() {
         pointsAmount += 1;
     }
 
-    public void addToPointsAmount (int pointsAmount) {
+    public void addToPointsAmount(int pointsAmount) {
         this.pointsAmount += pointsAmount;
     }
 
