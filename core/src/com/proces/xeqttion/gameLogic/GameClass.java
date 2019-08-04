@@ -12,9 +12,16 @@ public class GameClass extends Game {
 
     public void create() {
         batch = new SpriteBatch();
-        // default Arial font
         font = new BitmapFont();
         this.setScreen(new MainMenuScreen(this));
+    }
+
+    public SpriteBatch getBatch() {
+        return batch;
+    }
+
+    public BitmapFont getFont() {
+        return font;
     }
 
     public int getPointsAmount() {
