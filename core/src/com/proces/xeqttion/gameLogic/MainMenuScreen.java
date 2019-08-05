@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 
 public class MainMenuScreen implements Screen {
 
-    final GameClass game;
+    final private GameClass game;
 
     OrthographicCamera camera;
 
@@ -24,12 +24,12 @@ public class MainMenuScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
+        game.getBatch().setProjectionMatrix(camera.combined);
 
-        game.batch.begin();
-        game.font.draw(game.batch, "Welcomen!", 100, 150);
-        game.font.draw(game.batch, "Tap to comtinue!", 100, 100);
-        game.batch.end();
+        game.getBatch().begin();
+        game.getFont().draw(game.getBatch(), "Welcomen!", 100, 150);
+        game.getFont().draw(game.getBatch(), "Tap to comtinue!", 100, 100);
+        game.getBatch().end();
 
         if (Gdx.input.isTouched()) {
             game.setScreen(new GameScreen(game));
