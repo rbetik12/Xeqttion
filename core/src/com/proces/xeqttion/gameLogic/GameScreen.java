@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -21,11 +22,14 @@ public class GameScreen implements Screen {
     private SpriteBatch batch;
     private Stage stage;
     private Array<Electron> electrons;
+    private OrthographicCamera camera;
 
     public GameScreen(GameClass game) {
         this.game = game;
         this.batch = game.getBatch();
         electrons = new Array<>();
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false);
     }
 
     @Override
@@ -61,20 +65,24 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        camera.update();
+
+        stage.getViewport().setCamera(camera);
+        batch.setProjectionMatrix(camera.combined);
+
         batch.begin();
         for (Electron electron: electrons) {
-            Gdx.app.log("Drawing", "Attempt of drawing an electron...");
             try {
                 batch.draw(electron.getTexture(), electron.getPosition().x, electron.getPosition().y);
-                Gdx.app.log("Drawing", "Success");
             }
             catch (RuntimeException e){
-                Gdx.app.log("Drawing", "Failed" + e.getMessage());
+                Gdx.app.log("RenderException", e.getMessage());
             }
         }
         batch.end();
+
         stage.act();
         stage.draw();
     }

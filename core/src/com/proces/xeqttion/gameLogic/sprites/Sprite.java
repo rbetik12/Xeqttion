@@ -8,11 +8,6 @@ public abstract class Sprite {
     protected Vector2 position;
     protected Vector2 velocity;
 
-    public Sprite(float x, float y) {
-        position = new Vector2(x, y);
-        velocity = new Vector2(0, 0);
-    }
-
     public abstract void update (float delta);
     public void dispose() {
         texture.dispose();
