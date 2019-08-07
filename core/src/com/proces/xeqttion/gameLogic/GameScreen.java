@@ -17,12 +17,15 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.proces.xeqttion.gameLogic.sprites.Electron;
 
+import java.util.Random;
+
 public class GameScreen implements Screen {
     final private GameClass game;
     private SpriteBatch batch;
     private Stage stage;
     private Array<Electron> electrons;
     private OrthographicCamera camera;
+    private Random random;
 
     public GameScreen(GameClass game) {
         this.game = game;
@@ -30,6 +33,7 @@ public class GameScreen implements Screen {
         electrons = new Array<>();
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
+        random = new Random(1);
     }
 
     @Override
@@ -60,7 +64,6 @@ public class GameScreen implements Screen {
                 return true;
             }
         });
-
     }
 
     @Override
@@ -75,7 +78,8 @@ public class GameScreen implements Screen {
         batch.begin();
         for (Electron electron: electrons) {
             try {
-                batch.draw(electron.getTexture(), electron.getPosition().x, electron.getPosition().y);
+                batch.setColor(new Color(random.nextFloat(), random.nextFloat(), random.nextFloat(), 1));
+                batch.draw(electron.getSprite(), electron.getPosition().x, electron.getPosition().y);
             }
             catch (RuntimeException e){
                 Gdx.app.log("RenderException", e.getMessage());
