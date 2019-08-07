@@ -60,7 +60,7 @@ public class GameScreen implements Screen {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 game.incPointsAmount();
                 pointsLabel.setText(game.getPointsAmount());
-                electrons.add(new Electron(x, y));
+                electrons.add(new Electron(x, y, new Color(0, random.nextFloat(), 1, 1)));
                 return true;
             }
         });
@@ -78,6 +78,7 @@ public class GameScreen implements Screen {
         batch.begin();
         for (Electron electron: electrons) {
             try {
+                batch.setColor(electron.getColor());
                 batch.draw(electron.getSprite(), electron.getPosition().x, electron.getPosition().y);
             }
             catch (RuntimeException e){
