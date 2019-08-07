@@ -78,7 +78,6 @@ public class GameScreen implements Screen {
         batch.begin();
         for (Electron electron: electrons) {
             try {
-                batch.setColor(new Color(random.nextFloat(), random.nextFloat(), random.nextFloat(), 1));
                 batch.draw(electron.getSprite(), electron.getPosition().x, electron.getPosition().y);
             }
             catch (RuntimeException e){
