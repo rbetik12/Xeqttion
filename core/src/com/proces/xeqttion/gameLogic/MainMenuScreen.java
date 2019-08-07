@@ -15,7 +15,7 @@ public class MainMenuScreen implements Screen {
         this.game = game;
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480); // nailed size of screen
+        camera.setToOrtho(false, 480, 800); // nailed size of screen
     }
 
     @Override
@@ -28,7 +28,7 @@ public class MainMenuScreen implements Screen {
 
         game.getBatch().begin();
         game.getFont().draw(game.getBatch(), "Welcomen!", 100, 150);
-        game.getFont().draw(game.getBatch(), "Tap to comtinue!", 100, 100);
+        game.getFont().draw(game.getBatch(), "Tap to continue!", 100, 100);
         game.getBatch().end();
 
         if (Gdx.input.isTouched()) {
