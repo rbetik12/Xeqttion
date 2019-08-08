@@ -26,6 +26,7 @@ public class GameScreen implements Screen {
     private Array<Electron> electrons;
     private OrthographicCamera camera;
     private Random random;
+    private Label fps;
 
     public GameScreen(GameClass game) {
         this.game = game;
@@ -45,15 +46,23 @@ public class GameScreen implements Screen {
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 50;
         parameter.color = Color.WHITE;
-        BitmapFont font = generator.generateFont(parameter);
+        BitmapFont font50 = generator.generateFont(parameter);
+        parameter.size = 40;
+        BitmapFont font40 = generator.generateFont(parameter);
         generator.dispose();
 
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = font;
+        Label.LabelStyle pointsLabelStyle = new Label.LabelStyle();
+        pointsLabelStyle.font = font50;
+        Label.LabelStyle fpsLabelStyle = new Label.LabelStyle();
+        fpsLabelStyle.font = font40;
 
-        final Label pointsLabel = new Label(String.valueOf(game.getPointsAmount()), labelStyle);
+        final Label pointsLabel = new Label(String.valueOf(game.getPointsAmount()), pointsLabelStyle);
         pointsLabel.setPosition(Gdx.graphics.getWidth() / 2f - pointsLabel.getScaleX() / 2f, Gdx.graphics.getHeight() * 0.9f);
         stage.addActor(pointsLabel);
+
+        fps = new Label(Gdx.graphics.getFramesPerSecond() + " FPS", fpsLabelStyle);
+        fps.setPosition(Gdx.graphics.getWidth() - fps.getWidth() * 1.2f, Gdx.graphics.getHeight() - fps.getHeight() * 1.5f);
+        stage.addActor(fps);
 
         stage.addListener(new InputListener() {
             @Override
@@ -70,7 +79,6 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        camera.update();
 
         stage.getViewport().setCamera(camera);
         batch.setProjectionMatrix(camera.combined);
@@ -89,6 +97,9 @@ public class GameScreen implements Screen {
 
         stage.act();
         stage.draw();
+
+        fps.setText(Gdx.graphics.getFramesPerSecond() + " FPS");
+        camera.update();
     }
 
     @Override
