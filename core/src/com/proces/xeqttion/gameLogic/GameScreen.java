@@ -3,6 +3,7 @@ package com.proces.xeqttion.gameLogic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -27,6 +28,7 @@ public class GameScreen implements Screen {
     private OrthographicCamera camera;
     private Random random;
     private Label fps;
+    private Sound popSound;
 
     public GameScreen(GameClass game) {
         this.game = game;
@@ -35,6 +37,7 @@ public class GameScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
         random = new Random(1);
+        popSound = Gdx.audio.newSound(Gdx.files.internal("sounds/pop.mp3"));
     }
 
     @Override
@@ -67,6 +70,7 @@ public class GameScreen implements Screen {
         stage.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                popSound.play(0.5f);
                 game.incPointsAmount();
                 pointsLabel.setText(game.getPointsAmount());
                 electrons.add(new Electron(x, y, new Color(0, random.nextFloat(), 1, 1)));
