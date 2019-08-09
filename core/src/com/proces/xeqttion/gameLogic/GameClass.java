@@ -11,13 +11,12 @@ public class GameClass extends Game {
     private BitmapFont font;
     private int pointsAmount;
     private float aspectRatio;
-    final float GAME_SIZE = 100;
 
     public void create() {
         batch = new SpriteBatch();
         font = new BitmapFont();
         this.setScreen(new MainMenuScreen(this));
-        this.aspectRatio = (float)Gdx.graphics.getBackBufferWidth() / (float) Gdx.graphics.getBackBufferHeight();
+        this.aspectRatio = (float)Gdx.graphics.getWidth() / (float) Gdx.graphics.getHeight();
     }
 
     public SpriteBatch getBatch() {

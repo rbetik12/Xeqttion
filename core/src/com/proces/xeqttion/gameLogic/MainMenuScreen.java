@@ -6,22 +6,35 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import java.awt.Label;
+
+import javax.swing.plaf.synth.Region;
 
 public class MainMenuScreen implements Screen {
 
     final private GameClass game;
+
+    final float GAME_WIDTH = Gdx.graphics.getWidth();
+    final float GAME_HEIGHT = Gdx.graphics.getHeight();
+
     private Sprite sprite;
 
+    //Label label;
     Texture texture;
+    TextureRegion region;
     OrthographicCamera camera;
 
     public MainMenuScreen(final GameClass game) {
         this.game = game;
 
         texture = new Texture(Gdx.files.internal("images/electro-w-o-back.png"));
+        //label.setText("Tap please!");
+        //region = new TextureRegion(texture, 200, 200);
 
         this.sprite = new Sprite(texture);
-        sprite.setPosition(10,10);
+        //sprite.setPosition(10,10);
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); // nailed size of screen
@@ -37,9 +50,11 @@ public class MainMenuScreen implements Screen {
         game.getBatch().setProjectionMatrix(camera.combined);
 
         game.getBatch().begin();
-        this.sprite.draw(game.getBatch());
-        game.getFont().draw(game.getBatch(), "Welcomen!", 100, 150);
-        game.getFont().draw(game.getBatch(), "Tap to continue!", 100, 100);
+        //this.sprite.draw(game.getBatch());
+        //game.getBatch().draw(region, 10, 10);
+        game.getBatch().draw(texture, 0, GAME_HEIGHT/2, GAME_WIDTH, GAME_WIDTH/2);
+        //game.getFont().draw(game.getBatch(), "Welcomen!", 100, 150);
+        //game.getFont().draw(game.getBatch(), "Tap to continue!", 100, 100, GAME_WIDTH, 1, false);
         game.getBatch().end();
 
         if (Gdx.input.isTouched()) {
