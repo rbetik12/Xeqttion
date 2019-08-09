@@ -4,18 +4,28 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class MainMenuScreen implements Screen {
 
     final private GameClass game;
+    private Sprite sprite;
 
+    Texture texture;
     OrthographicCamera camera;
 
     public MainMenuScreen(final GameClass game) {
         this.game = game;
 
+        texture = new Texture(Gdx.files.internal("images/electro-w-o-back.png"));
+
+        this.sprite = new Sprite(texture);
+        sprite.setPosition(10,10);
+
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 480, 800); // nailed size of screen
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()); // nailed size of screen
+        //camera.position.set(game.GAME_SIZE/2, game.GAME_SIZE/2, 0);
     }
 
     @Override
@@ -27,6 +37,7 @@ public class MainMenuScreen implements Screen {
         game.getBatch().setProjectionMatrix(camera.combined);
 
         game.getBatch().begin();
+        this.sprite.draw(game.getBatch());
         game.getFont().draw(game.getBatch(), "Welcomen!", 100, 150);
         game.getFont().draw(game.getBatch(), "Tap to continue!", 100, 100);
         game.getBatch().end();
@@ -59,5 +70,6 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
+        texture.dispose();
     }
 }
