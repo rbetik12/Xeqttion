@@ -11,7 +11,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.ChainShape;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -34,8 +38,10 @@ public class GameScreen implements Screen {
     private Random random;
     private Label fps;
     private Sound popSound;
+
     private World world;
     private Box2DDebugRenderer renderer;
+    private Body ground;
 
     public GameScreen(GameClass game) {
         this.game = game;
@@ -74,6 +80,7 @@ public class GameScreen implements Screen {
         stage.addActor(fps);
 
         initInputListener();
+        addGround();
     }
 
     @Override
@@ -92,6 +99,17 @@ public class GameScreen implements Screen {
                 return true;
             }
         });
+    }
+
+    private void addGround() {
+        BodyDef bDef = new BodyDef();
+        bDef.type = BodyDef.BodyType.StaticBody;
+        bDef.position.set(0, Gdx.graphics.getHeight() / 4f);
+        ground = world.createBody(bDef);
+        PolygonShape polygonShape = new PolygonShape();
+        polygonShape.setAsBox(Gdx.graphics.getWidth() + 1, Gdx.graphics.getHeight() / 60f);
+        ground.createFixture(polygonShape, 5f);
+        polygonShape.dispose();
     }
 
     @Override
