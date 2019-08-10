@@ -88,12 +88,11 @@ public class GameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
-        for (Electron electron: electrons) {
+        for (Electron electron : electrons) {
             try {
                 batch.setColor(electron.getColor());
                 batch.draw(electron.getSprite(), electron.getPosition().x, electron.getPosition().y);
-            }
-            catch (RuntimeException e){
+            } catch (RuntimeException e) {
                 Gdx.app.log("RenderException", e.getMessage());
             }
         }
