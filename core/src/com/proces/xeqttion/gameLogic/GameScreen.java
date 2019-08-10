@@ -10,6 +10,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -22,6 +25,8 @@ import java.util.Random;
 
 public class GameScreen implements Screen {
     final private GameClass game;
+    final private Label pointsLabel;
+
     private SpriteBatch batch;
     private Stage stage;
     private Array<Electron> electrons;
@@ -29,6 +34,8 @@ public class GameScreen implements Screen {
     private Random random;
     private Label fps;
     private Sound popSound;
+    private World world;
+    private Box2DDebugRenderer renderer;
 
     public GameScreen(GameClass game) {
         this.game = game;
@@ -38,10 +45,9 @@ public class GameScreen implements Screen {
         camera.setToOrtho(false);
         random = new Random(1);
         popSound = Gdx.audio.newSound(Gdx.files.internal("sounds/pop.mp3"));
-    }
+        renderer = new Box2DDebugRenderer();
 
-    @Override
-    public void show() {
+        world = new World(new Vector2(0, -10), true);
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
 
@@ -59,7 +65,7 @@ public class GameScreen implements Screen {
         Label.LabelStyle fpsLabelStyle = new Label.LabelStyle();
         fpsLabelStyle.font = font40;
 
-        final Label pointsLabel = new Label(String.valueOf(game.getPointsAmount()), pointsLabelStyle);
+        pointsLabel = new Label(String.valueOf(game.getPointsAmount()), pointsLabelStyle);
         pointsLabel.setPosition(Gdx.graphics.getWidth() / 2f - pointsLabel.getScaleX() / 2f, Gdx.graphics.getHeight() * 0.9f);
         stage.addActor(pointsLabel);
 
@@ -67,13 +73,22 @@ public class GameScreen implements Screen {
         fps.setPosition(Gdx.graphics.getWidth() - fps.getWidth() * 1.2f, Gdx.graphics.getHeight() - fps.getHeight() * 1.5f);
         stage.addActor(fps);
 
+        initInputListener();
+    }
+
+    @Override
+    public void show() {
+
+    }
+
+    private void initInputListener() {
         stage.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 popSound.play(0.5f);
                 game.incPointsAmount();
                 pointsLabel.setText(game.getPointsAmount());
-                electrons.add(new Electron(x, y, new Color(0, random.nextFloat(), 1, 1)));
+                electrons.add(new Electron(world, x, y, new Color(0, random.nextFloat(), 1, 1)));
                 return true;
             }
         });
@@ -92,6 +107,7 @@ public class GameScreen implements Screen {
             try {
                 batch.setColor(electron.getColor());
                 batch.draw(electron.getSprite(), electron.getPosition().x, electron.getPosition().y);
+                electron.update(delta);
             } catch (RuntimeException e) {
                 Gdx.app.log("RenderException", e.getMessage());
             }
@@ -103,6 +119,9 @@ public class GameScreen implements Screen {
 
         fps.setText(Gdx.graphics.getFramesPerSecond() + " FPS");
         camera.update();
+
+        renderer.render(world, camera.combined);
+        world.step(1 / 60f, 6, 2);
     }
 
     @Override
