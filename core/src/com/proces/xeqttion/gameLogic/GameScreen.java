@@ -81,6 +81,8 @@ public class GameScreen implements Screen {
 
         initInputListener();
         addGround();
+        addOutterTube();
+        addInnerTube();
     }
 
     @Override
@@ -105,11 +107,54 @@ public class GameScreen implements Screen {
         BodyDef bDef = new BodyDef();
         bDef.type = BodyDef.BodyType.StaticBody;
         bDef.position.set(0, Gdx.graphics.getHeight() / 4f);
+
         ground = world.createBody(bDef);
+
         PolygonShape polygonShape = new PolygonShape();
         polygonShape.setAsBox(Gdx.graphics.getWidth() + 1, Gdx.graphics.getHeight() / 60f);
+
         ground.createFixture(polygonShape, 5f);
         polygonShape.dispose();
+    }
+
+    private void addOutterTube() {
+        Body outterConductor;
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        outterConductor = world.createBody(bodyDef);
+
+        ChainShape outterConductorShape = new ChainShape();
+        Vector2[] vector2s = new Vector2[6];
+        vector2s[0] = new Vector2(Gdx.graphics.getWidth() / 2f - 2 / 5f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 4f + Gdx.graphics.getHeight() / 60f);
+        vector2s[1] = new Vector2(Gdx.graphics.getWidth() / 2f - 2 / 5f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 3 / 4f);
+        vector2s[2] = new Vector2(Gdx.graphics.getWidth() / 2f - 2 / 5f * Gdx.graphics.getWidth() + Gdx.graphics.getHeight() / 12f, Gdx.graphics.getHeight() * 3 / 4f + Gdx.graphics.getHeight() / 12f);
+        vector2s[3] = new Vector2(Gdx.graphics.getWidth() / 2f + 2 / 5f * Gdx.graphics.getWidth() - Gdx.graphics.getHeight() / 12f, Gdx.graphics.getHeight() * 3 / 4f + Gdx.graphics.getHeight() / 12f);
+        vector2s[4] = new Vector2(Gdx.graphics.getWidth() / 2f + 2 / 5f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 3 / 4f);
+        vector2s[5] = new Vector2(Gdx.graphics.getWidth() / 2f + 2 / 5f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 4f + Gdx.graphics.getHeight() / 60f);
+        outterConductorShape.createChain(vector2s);
+
+        outterConductor.createFixture(outterConductorShape, 5f);
+        outterConductorShape.dispose();
+    }
+
+    private void addInnerTube() {
+        Body innerConductor;
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        innerConductor = world.createBody(bodyDef);
+
+        ChainShape innerConductorShape = new ChainShape();
+        Vector2[] vector2s = new Vector2[6];
+        vector2s[0] = new Vector2(Gdx.graphics.getWidth() / 2f - 1 / 5f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 4f + Gdx.graphics.getHeight() / 60f);
+        vector2s[1] = new Vector2(Gdx.graphics.getWidth() / 2f - 1 / 5f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 4 / 6f);
+        vector2s[2] = new Vector2(Gdx.graphics.getWidth() / 2f - 1 / 5f * Gdx.graphics.getWidth() + Gdx.graphics.getHeight() / 12f, Gdx.graphics.getHeight() * 4 / 6f + Gdx.graphics.getHeight() / 12f);
+        vector2s[3] = new Vector2(Gdx.graphics.getWidth() / 2f + 1 / 5f * Gdx.graphics.getWidth() - Gdx.graphics.getHeight() / 12f, Gdx.graphics.getHeight() * 4 / 6f + Gdx.graphics.getHeight() / 12f);
+        vector2s[4] = new Vector2(Gdx.graphics.getWidth() / 2f + 1 / 5f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 4 / 6f);
+        vector2s[5] = new Vector2(Gdx.graphics.getWidth() / 2f + 1 / 5f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 4f + Gdx.graphics.getHeight() / 60f);
+        innerConductorShape.createChain(vector2s);
+
+        innerConductor.createFixture(innerConductorShape, 5f);
+        innerConductorShape.dispose();
     }
 
     @Override
