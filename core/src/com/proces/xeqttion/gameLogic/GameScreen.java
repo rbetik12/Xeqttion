@@ -106,12 +106,12 @@ public class GameScreen implements Screen {
     private void addGround() {
         BodyDef bDef = new BodyDef();
         bDef.type = BodyDef.BodyType.StaticBody;
-        bDef.position.set(0, Gdx.graphics.getHeight() / 4f);
+        bDef.position.set(0, Gdx.graphics.getHeight() / 6f);
 
         ground = world.createBody(bDef);
 
         PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(Gdx.graphics.getWidth() + 1, Gdx.graphics.getHeight() / 60f);
+        polygonShape.setAsBox(Gdx.graphics.getWidth() + 1, 1);
 
         ground.createFixture(polygonShape, 5f);
         polygonShape.dispose();
@@ -125,12 +125,12 @@ public class GameScreen implements Screen {
 
         ChainShape outterConductorShape = new ChainShape();
         Vector2[] vector2s = new Vector2[6];
-        vector2s[0] = new Vector2(Gdx.graphics.getWidth() / 2f - 2 / 5f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 4f + Gdx.graphics.getHeight() / 60f);
-        vector2s[1] = new Vector2(Gdx.graphics.getWidth() / 2f - 2 / 5f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 3 / 4f);
-        vector2s[2] = new Vector2(Gdx.graphics.getWidth() / 2f - 2 / 5f * Gdx.graphics.getWidth() + Gdx.graphics.getHeight() / 12f, Gdx.graphics.getHeight() * 3 / 4f + Gdx.graphics.getHeight() / 12f);
-        vector2s[3] = new Vector2(Gdx.graphics.getWidth() / 2f + 2 / 5f * Gdx.graphics.getWidth() - Gdx.graphics.getHeight() / 12f, Gdx.graphics.getHeight() * 3 / 4f + Gdx.graphics.getHeight() / 12f);
-        vector2s[4] = new Vector2(Gdx.graphics.getWidth() / 2f + 2 / 5f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 3 / 4f);
-        vector2s[5] = new Vector2(Gdx.graphics.getWidth() / 2f + 2 / 5f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 4f + Gdx.graphics.getHeight() / 60f);
+        vector2s[0] = new Vector2(Gdx.graphics.getWidth() / 2f - 2 / 5f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 6f + 1);
+        vector2s[1] = new Vector2(Gdx.graphics.getWidth() / 2f - 2 / 5f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 3 / 6f);
+        vector2s[2] = new Vector2(Gdx.graphics.getWidth() / 2f - 2 / 5f * Gdx.graphics.getWidth() + Gdx.graphics.getHeight() / 12f, Gdx.graphics.getHeight() * 3 / 6f + Gdx.graphics.getHeight() / 12f);
+        vector2s[3] = new Vector2(Gdx.graphics.getWidth() / 2f + 2 / 5f * Gdx.graphics.getWidth() - Gdx.graphics.getHeight() / 12f, Gdx.graphics.getHeight() * 3 / 6f + Gdx.graphics.getHeight() / 12f);
+        vector2s[4] = new Vector2(Gdx.graphics.getWidth() / 2f + 2 / 5f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 3 / 6f);
+        vector2s[5] = new Vector2(Gdx.graphics.getWidth() / 2f + 2 / 5f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 6f + 1);
         outterConductorShape.createChain(vector2s);
 
         outterConductor.createFixture(outterConductorShape, 5f);
@@ -145,12 +145,12 @@ public class GameScreen implements Screen {
 
         ChainShape innerConductorShape = new ChainShape();
         Vector2[] vector2s = new Vector2[6];
-        vector2s[0] = new Vector2(Gdx.graphics.getWidth() / 2f - 1 / 5f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 4f + Gdx.graphics.getHeight() / 60f);
-        vector2s[1] = new Vector2(Gdx.graphics.getWidth() / 2f - 1 / 5f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 4 / 6f);
-        vector2s[2] = new Vector2(Gdx.graphics.getWidth() / 2f - 1 / 5f * Gdx.graphics.getWidth() + Gdx.graphics.getHeight() / 12f, Gdx.graphics.getHeight() * 4 / 6f + Gdx.graphics.getHeight() / 12f);
-        vector2s[3] = new Vector2(Gdx.graphics.getWidth() / 2f + 1 / 5f * Gdx.graphics.getWidth() - Gdx.graphics.getHeight() / 12f, Gdx.graphics.getHeight() * 4 / 6f + Gdx.graphics.getHeight() / 12f);
-        vector2s[4] = new Vector2(Gdx.graphics.getWidth() / 2f + 1 / 5f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 4 / 6f);
-        vector2s[5] = new Vector2(Gdx.graphics.getWidth() / 2f + 1 / 5f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 4f + Gdx.graphics.getHeight() / 60f);
+        vector2s[0] = new Vector2(Gdx.graphics.getWidth() / 2f - 1 / 5f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 6f + 1);
+        vector2s[1] = new Vector2(Gdx.graphics.getWidth() / 2f - 1 / 5f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 0.42f);
+        vector2s[2] = new Vector2(Gdx.graphics.getWidth() / 2f - 1 / 5f * Gdx.graphics.getWidth() + Gdx.graphics.getHeight() / 12f, Gdx.graphics.getHeight() * 0.42f + Gdx.graphics.getHeight() / 12f);
+        vector2s[3] = new Vector2(Gdx.graphics.getWidth() / 2f + 1 / 5f * Gdx.graphics.getWidth() - Gdx.graphics.getHeight() / 12f, Gdx.graphics.getHeight() * 0.42f + Gdx.graphics.getHeight() / 12f);
+        vector2s[4] = new Vector2(Gdx.graphics.getWidth() / 2f + 1 / 5f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() * 0.42f);
+        vector2s[5] = new Vector2(Gdx.graphics.getWidth() / 2f + 1 / 5f * Gdx.graphics.getWidth(), Gdx.graphics.getHeight() / 6f + 1);
         innerConductorShape.createChain(vector2s);
 
         innerConductor.createFixture(innerConductorShape, 5f);
